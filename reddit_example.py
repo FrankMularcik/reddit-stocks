@@ -2,7 +2,6 @@ from psaw import PushshiftAPI
 from datetime import datetime, date, timedelta
 import tkinter
 import webbrowser, requests
-from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
