@@ -8,12 +8,6 @@ from selenium.webdriver.chrome.options import Options
 tags = []
 urls = {}
 
-def show_hand_cursor(event):
-    text.config(cursor='arrow')
-
-def show_xterm_cursor(event):
-    text.config(cursor='xterm')
-
 def do(event, tag):
     
     webbrowser.open(urls[tag])
@@ -27,7 +21,7 @@ def when_pressed(event=None):
     if date_enter.get() != "":
         date_to_use = datetime.strptime(date_enter.get(), '%m/%d/%Y')
     start = datetime(hour=1, month=date_to_use.month, year=date_to_use.year, day=date_to_use.day)
-    posts = list(api.search_submissions(q = str(tick_enter.get().upper()), after=start, subreddit='wallstreetbets', filter=['url', 'title',], limit=1000))
+    posts = list(api.search_submissions(q = str(tick_enter.get().upper()), after=start, subreddit='wallstreetbets', filter=['url', 'title',], limit=500))
 
     for post in posts:
         words = post.title.split()
@@ -49,8 +43,6 @@ def when_pressed(event=None):
                             text.insert('1.0', post.title + "\n")
                             text.tag_add("tag"+str(x), '1.0', '1.end')
                             text.tag_config("tag"+str(x), foreground='blue', underline=True)
-                            text.tag_bind("tag"+str(x), '<Enter>', show_hand_cursor)
-                            text.tag_bind("tag"+str(x), '<Leave>', show_xterm_cursor)
                             tag = "tag" + str(x)
                             callback = lambda even, tag=tag: do(event, tag)
                             text.tag_bind("tag"+str(x), '<Button-1>', callback)
